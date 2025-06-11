@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { Suspense, useEffect } from "react"
 import { usePathname, useSearchParams } from "next/navigation"
 
 declare global {
@@ -10,7 +10,7 @@ declare global {
   }
 }
 
-export function Analytics() {
+function AnalyticsHelper() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
@@ -74,4 +74,12 @@ export function Analytics() {
   }, [])
 
   return null
+}
+
+export function Analytics() {
+  return (
+    <Suspense fallback={<></>}>
+      <AnalyticsHelper />
+    </Suspense>
+  );
 }
